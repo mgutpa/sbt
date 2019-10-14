@@ -22,7 +22,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/secured/**").authenticated()
 		.anyRequest().permitAll()
 		.and()
-		.formLogin().failureHandler(new CustomAuthenticationFailure()).and().httpBasic();
+		.formLogin().loginPage("/login").failureHandler(new CustomAuthenticationFailure()).and().httpBasic();
 		
 	}
 

@@ -59,9 +59,9 @@ public class LocationTimeOutController {
 		return message;
 	}
 	
-	@RequestMapping("/home")
+	@RequestMapping("/login")
 	public String home() {			
-		return "index";
+		return "signup";
 	}
 			
 	@RequestMapping("/secured/add")
