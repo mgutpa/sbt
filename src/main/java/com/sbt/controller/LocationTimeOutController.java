@@ -1,21 +1,24 @@
 package com.sbt.controller;
 
 import java.security.Principal;
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sbt.dao.LocationTimeOutDao;
 import com.sbt.model.LocationTimeOutVO;
 import com.sbt.properties.PortalProperties;
+import com.sbt.util.Utility;
 
 @Controller
 public class LocationTimeOutController {
@@ -40,23 +43,12 @@ public class LocationTimeOutController {
 		//using externalize properties
 		mv.addObject("version",prop.getVersion());
 		
-		//using Lacale properties
+		//using Locale properties
 		String[] params = new String[]{"Ikhiloya", "today"};
-		mv.addObject("greet",getLocaleMessage(params));
+		mv.addObject("greet",Utility.getLocaleMessage("good.morning.name",params,LocaleContextHolder.getLocale(),messageSource));
 		
 		logger.debug("Principal Value is : " + principal);
 		return mv;
-	}
-
-	private String getLocaleMessage(String[] params) {
-		String message="";
-		try {
-			 message = messageSource.getMessage("good.morning.name",params,LocaleContextHolder.getLocale());
-		} catch (NoSuchMessageException e) {
-			message = messageSource.getMessage("good.morning.name",params,Locale.US);
-		}
-		
-		return message;
 	}
 	
 	@RequestMapping("/login")
@@ -68,6 +60,20 @@ public class LocationTimeOutController {
 	public String SaveEntity(LocationTimeOutVO locVo) {			
 		locTimeDao.save(locVo);
 		return "index";
+	}	
+	
+	@RequestMapping(value="/fetchTimeoutDetails",method=RequestMethod.POST,produces={ "application/json", "application/xml" })
+	@ResponseBody
+	public List<LocationTimeOutVO> fetchLocationTimeOutDetails() {
+		List<LocationTimeOutVO> locationDetails = new ArrayList<LocationTimeOutVO>(); 
+		locationDetails.add(new LocationTimeOutVO("OYO",14324L, 454L));
+		locationDetails.add(new LocationTimeOutVO("OYO-Delhi",14356L, 600L));
+		locationDetails.add(new LocationTimeOutVO("OYO-Kolkata",14376L, 500L));
+		locationDetails.add(new LocationTimeOutVO("OYO-Jharkhand",14763L, 4800L));
+
+		return locationDetails;
+		
 	}
+	
 
 }

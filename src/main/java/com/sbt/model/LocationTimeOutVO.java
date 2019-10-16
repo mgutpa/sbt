@@ -18,6 +18,14 @@ public class LocationTimeOutVO {
 	public LocationTimeOutVO() {
 		System.out.println("LocationTimeOutVO created");
 	}
+	
+	public LocationTimeOutVO(String resellerName, Long aPID, Long macExpiryTime) {
+		this.resellerName = resellerName;
+		APID = aPID;
+		this.macExpiryTime = macExpiryTime;
+	}
+
+
 
 	public String getResellerName() {
 		return resellerName;
