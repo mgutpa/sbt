@@ -62,9 +62,10 @@ public class LocationTimeOutController {
 		return "index";
 	}	
 	
-	@RequestMapping(value="/fetchTimeoutDetails",method=RequestMethod.POST,produces={ "application/json", "application/xml" })
+	@RequestMapping(value="/fetchTimeoutDetails",method=RequestMethod.GET,produces={ "application/json", "application/xml" })
 	@ResponseBody
 	public List<LocationTimeOutVO> fetchLocationTimeOutDetails() {
+		//We can call DB and get the details
 		List<LocationTimeOutVO> locationDetails = new ArrayList<LocationTimeOutVO>(); 
 		locationDetails.add(new LocationTimeOutVO("OYO",14324L, 454L));
 		locationDetails.add(new LocationTimeOutVO("OYO-Delhi",14356L, 600L));
